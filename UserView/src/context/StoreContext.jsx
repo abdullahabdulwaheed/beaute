@@ -4,7 +4,7 @@ import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-    const url = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const url = "https://beaute-backend-92d8.onrender.com";
     const [token, setToken] = useState("");
     const [cartItems, setCartItems] = useState({});
     const [productList, setProductList] = useState([]);
