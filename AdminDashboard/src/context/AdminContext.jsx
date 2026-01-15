@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from "react";
 export const AdminContext = createContext(null);
 
 const AdminContextProvider = (props) => {
-    const url = "https://beaute-backend-92d8.onrender.com";
+    const url = "https://beaute-backend-tchx.onrender.com";
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [theme, setTheme] = useState(localStorage.getItem("adminTheme") || "light");
     const [admin, setAdmin] = useState(JSON.parse(localStorage.getItem("user")) || null);
