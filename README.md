@@ -4,6 +4,13 @@
 
 ---
 
+## 🌐 Live Demos
+
+- **Frontend (Shop)**: [https://beaute-frontend.onrender.com/](https://beaute-frontend.onrender.com/)
+- **Admin Dashboard**: [https://beaute-admin.onrender.com/](https://beaute-admin.onrender.com/)
+
+---
+
 ## 📸 Interface Previews
 
 ### **User View**
