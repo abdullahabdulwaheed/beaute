@@ -16,41 +16,57 @@ const __dirname = path.dirname(__filename);
 
 dotenv.config();
 
-connectDB();
+// Connect to Database
+connectDB().catch(err => {
+    console.error("Database connection failed:", err);
+});
 
 const app = express();
 
+// Robust CORS configuration for Vercel
 const allowedOrigins = [
     "http://localhost:5173",
     "https://beaute-cosmetics.vercel.app",
     "https://beaute-admin.vercel.app",
 ];
 
-app.use(
-    cors({
-        origin: (origin, callback) => {
-            if (!origin || allowedOrigins.includes(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error("CORS not allowed"));
-            }
-        },
-        credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-    })
-);
+// Dynamically handle subdomains/previews if needed
+const corsOptions = {
+    origin: (origin, callback) => {
+        // Allow requests with no origin (like mobile apps or curl)
+        if (!origin) return callback(null, true);
 
-app.options("*", cors());
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+        "Origin",
+        "X-Requested-With",
+        "Content-Type",
+        "Accept",
+        "Authorization",
+        "X-HTTP-Method-Override"
+    ],
+    preflightContinue: false,
+    optionsSuccessStatus: 204
+};
+
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(express.json());
 
+// Routes
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/cart', cartRoutes);
-
 
 // File Upload Logic
 const storage = multer.diskStorage({
@@ -85,18 +101,33 @@ const upload = multer({
 });
 
 app.post('/api/upload', upload.single('image'), (req, res) => {
-    res.send(`/${req.file.path}`);
+    if (req.file) {
+        res.send(`/${req.file.path}`);
+    } else {
+        res.status(400).send("No file uploaded");
+    }
 });
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.get('/', (req, res) => {
-    res.send('API is running...');
+    res.send('BEAUTÉ API is running...');
+});
+
+// Error handling middleware for CORS or other unexpected errors
+app.use((err, req, res, next) => {
+    if (err.message === 'Not allowed by CORS') {
+        res.status(403).json({ error: 'CORS Error: Origin not allowed' });
+    } else {
+        console.error(err.stack);
+        res.status(500).json({ error: 'Server Error' });
+    }
 });
 
 const PORT = process.env.PORT || 5000;
 
-if (process.env.NODE_ENV !== 'production') {
+// Only listen locally, Vercel will export the app
+if (process.env.NODE_ENV !== 'production' && process.env.VERCEL !== '1') {
     app.listen(PORT, console.log(`Server running on port ${PORT}`));
 }
 
