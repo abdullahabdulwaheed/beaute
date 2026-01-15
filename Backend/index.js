@@ -18,33 +18,47 @@ const __dirname = path.dirname(__filename);
 dotenv.config();
 
 // Connect to Database
-// In Vercel, we don't want to crash the whole lambda if DB is slow
 const dbPromise = connectDB().catch(err => {
     console.error("Critical: Database connection failed during boot:", err.message);
 });
 
 const app = express();
 
+// List of allowed origins - Added Render domains explicitly
 const allowedOrigins = [
     "http://localhost:5173",
     "https://beaute-cosmetics.vercel.app",
     "https://beaute-admin.vercel.app",
+    "https://beaute-admin.onrender.com",
+    "https://beaute-cosmetics.onrender.com",
 ];
 
 const corsOptions = {
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin) || origin.endsWith('.vercel.app') || origin.endsWith('.onrender.com')) {
+        // Allow requests with no origin (like mobile apps)
+        if (!origin) return callback(null, true);
+
+        const isAllowed = allowedOrigins.includes(origin) ||
+            origin.includes('.vercel.app') ||
+            origin.includes('.onrender.com');
+
+        if (isAllowed) {
             callback(null, true);
         } else {
+            console.error(`CORS Blocked for origin: ${origin}`);
             callback(new Error('Not allowed by CORS'));
         }
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"]
+    allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept", "Origin"],
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
 };
 
+// Apply CORS globally
 app.use(cors(corsOptions));
+
+// This handles the OPTIONS preflight explicitly to avoid any middleware skipping
 app.options(/.*/, cors(corsOptions));
 
 app.use(express.json());
@@ -63,7 +77,6 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/cart', cartRoutes);
 
 // File Upload Logic
-// Vercel filesystem is read-only. We use memoryStorage for Vercel.
 const isVercel = process.env.VERCEL === '1';
 const storage = isVercel
     ? multer.memoryStorage()
@@ -95,8 +108,6 @@ const upload = multer({
 
 app.post('/api/upload', upload.single('image'), (req, res) => {
     if (isVercel) {
-        // Since Vercel is read-only, you'd usually use Cloudinary/S3.
-        // For now, we'll return a placeholder or error to avoid crashes.
         return res.status(400).json({ message: "File uploads to local disk are not supported on Vercel. Use Cloudinary/S3." });
     }
     if (req.file) {
@@ -114,6 +125,13 @@ app.get('/', (req, res) => {
 
 // Error handling
 app.use((err, req, res, next) => {
+    // Ensure CORS headers are present even in error responses
+    const origin = req.headers.origin;
+    if (origin && (allowedOrigins.includes(origin) || origin.includes('.onrender.com') || origin.includes('.vercel.app'))) {
+        res.header('Access-Control-Allow-Origin', origin);
+        res.header('Access-Control-Allow-Credentials', 'true');
+    }
+
     res.status(err.status || 500).json({
         message: err.message || 'Internal Server Error',
         stack: process.env.NODE_ENV === 'production' ? null : err.stack,
