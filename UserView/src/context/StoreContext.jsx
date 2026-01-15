@@ -4,7 +4,7 @@ import axios from "axios";
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
-    const url = "https://beaute-backend-4a20.onrender.com";
+    const url = "https://beaute-backend-tchx.onrender.com";
     const [token, setToken] = useState("");
     const [cartItems, setCartItems] = useState({});
     const [productList, setProductList] = useState([]);
