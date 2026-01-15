@@ -1,4 +1,5 @@
-const Order = require('../models/Order');
+import Order from '../models/Order.js';
+import User from '../models/User.js';
 
 // @desc    Create new order
 // @route   POST /api/orders
@@ -32,7 +33,6 @@ const addOrderItems = async (req, res) => {
         const createdOrder = await order.save();
 
         // Clear user cart
-        const User = require('../models/User');
         await User.findByIdAndUpdate(req.user._id, { cartData: {} });
 
         res.status(201).json(createdOrder);
@@ -80,19 +80,20 @@ const updateOrderToPaid = async (req, res) => {
     }
 };
 
-// @desc    Update order to delivered
-// @route   PUT /api/orders/:id/deliver
+// @desc    Update order status
+// @route   PUT /api/orders/:id/status
 // @access  Private/Admin
-const updateOrderToDelivered = async (req, res) => {
+const updateOrderStatus = async (req, res) => {
     const order = await Order.findById(req.params.id);
 
     if (order) {
-        order.isDelivered = true;
-        order.deliveredAt = Date.now();
-        order.status = 'Delivered';
+        order.status = req.body.status || order.status;
+        if (req.body.status === 'Delivered') {
+            order.isDelivered = true;
+            order.deliveredAt = Date.now();
+        }
 
         const updatedOrder = await order.save();
-
         res.json(updatedOrder);
     } else {
         res.status(404).json({ message: 'Order not found' });
@@ -115,11 +116,11 @@ const getOrders = async (req, res) => {
     res.json(orders);
 };
 
-module.exports = {
+export {
     addOrderItems,
     getOrderById,
     updateOrderToPaid,
-    updateOrderToDelivered,
+    updateOrderStatus,
     getMyOrders,
     getOrders,
 };

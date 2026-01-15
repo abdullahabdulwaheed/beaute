@@ -5,7 +5,7 @@ const categories = [
     { name: 'haircare', description: 'Premium treatments for hair health and styling.' },
     { name: 'bath & body', description: 'Luxurious cleansing and moisturizing body essentials.' },
     { name: 'mens grooming', description: 'Specialized care for the modern gentleman.' },
-    { name: 'wellness', description: 'Holistic products for inner and outer balance.' },
+    { name: 'wellness', description: 'Holdistic products for inner and outer balance.' },
     { name: 'sun care', description: 'Essential protection from UV rays and sun damage.' },
     { name: 'tools & brushes', description: 'Professional grade application tools.' },
     { name: 'nails', description: 'Vibrant colors and care for perfect manicures.' },
@@ -26,4 +26,4 @@ const categories = [
     { name: 'baby care', description: 'Ultra-gentle products for the most sensitive skin.' },
 ];
 
-module.exports = categories;
+export default categories;

@@ -18,7 +18,7 @@ const Login = () => {
     const onLogin = async (event) => {
         event.preventDefault();
         try {
-            const response = await axios.post(`${url}/api/users/login`, data);
+            const response = await axios.post(`${url}/api/users/login`, data, { withCredentials: true });
             if (response.data.token) {
                 if (response.data.role !== 'admin') {
                     alert("Access denied. Admin only.");

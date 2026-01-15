@@ -1,4 +1,4 @@
-const User = require('../models/User');
+import User from '../models/User.js';
 
 // @desc    Add to cart
 // @route   POST /api/cart/add
@@ -56,7 +56,7 @@ const getCart = async (req, res) => {
     }
 }
 
-module.exports = {
+export {
     addToCart,
     removeFromCart,
     getCart

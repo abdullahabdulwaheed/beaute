@@ -1,16 +1,16 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const users = require('./data/users');
-const admins = require('./data/admins');
-const products = require('./data/products');
-const categories = require('./data/categories');
-const User = require('./models/User');
-const Admin = require('./models/Admin');
-const Product = require('./models/Product');
-const Category = require('./models/Category');
-const Order = require('./models/Order');
-const connectDB = require('./config/db');
-const bcrypt = require('bcryptjs');
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import users from './data/users.js';
+import admins from './data/admins.js';
+import products from './data/products.js';
+import categories from './data/categories.js';
+import User from './models/User.js';
+import Admin from './models/Admin.js';
+import Product from './models/Product.js';
+import Category from './models/Category.js';
+import Order from './models/Order.js';
+import connectDB from './config/db.js';
+import bcrypt from 'bcryptjs';
 
 
 dotenv.config();

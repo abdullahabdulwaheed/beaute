@@ -38,7 +38,7 @@ const Login = () => {
     const onLogin = async (event) => {
         if (event) event.preventDefault();
         try {
-            const response = await axios.post(`${url}/api/users/login`, data);
+            const response = await axios.post(`${url}/api/users/login`, data, { withCredentials: true });
             if (response.data.token) {
                 handleLoginSuccess(response.data);
             }
@@ -64,7 +64,7 @@ const Login = () => {
         try {
             const response = await axios.post(`${url}/api/users/google-login`, {
                 tokenId: credentialResponse.credential
-            });
+            }, { withCredentials: true });
             if (response.data.token) {
                 handleLoginSuccess(response.data);
             }

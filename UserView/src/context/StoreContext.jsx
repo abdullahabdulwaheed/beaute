@@ -25,7 +25,7 @@ const StoreContextProvider = (props) => {
 
     const fetchProductList = async () => {
         try {
-            const response = await axios.get(url + "/api/products");
+            const response = await axios.get(url + "/api/products", { withCredentials: true });
             if (Array.isArray(response.data)) {
                 setProductList(response.data);
             } else {
@@ -40,7 +40,7 @@ const StoreContextProvider = (props) => {
 
     const fetchCategories = async () => {
         try {
-            const response = await axios.get(url + "/api/categories");
+            const response = await axios.get(url + "/api/categories", { withCredentials: true });
             if (Array.isArray(response.data)) {
                 setCategories(response.data);
             }
@@ -56,20 +56,20 @@ const StoreContextProvider = (props) => {
             setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
         }
         if (token) {
-            await axios.post(url + "/api/cart/add", { itemId }, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.post(url + "/api/cart/add", { itemId }, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         }
     }
 
     const removeFromCart = async (itemId) => {
         setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
         if (token) {
-            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { Authorization: `Bearer ${token}` } });
+            await axios.post(url + "/api/cart/remove", { itemId }, { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
         }
     }
 
     const loadCartData = async (token) => {
         try {
-            const response = await axios.get(url + "/api/cart", { headers: { Authorization: `Bearer ${token}` } });
+            const response = await axios.get(url + "/api/cart", { headers: { Authorization: `Bearer ${token}` }, withCredentials: true });
             if (response.data && response.data.cartData) {
                 setCartItems(response.data.cartData);
             } else {
