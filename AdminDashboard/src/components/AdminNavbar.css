@@ -1,0 +1,136 @@
+.admin-navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--border);
+}
+
+.admin-navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 5px;
+    transition: var(--transition);
+}
+
+.admin-navbar-left h3 {
+    font-size: 22px;
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: block;
+    }
+
+    .admin-navbar-left h3 {
+        font-size: 18px;
+    }
+}
+
+.admin-navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-icon-btn {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: var(--transition);
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border);
+    color: var(--text-dark);
+}
+
+.nav-icon-btn svg {
+    transition: transform 0.3s ease;
+}
+
+.nav-icon-btn:hover {
+    background: var(--admin-bg);
+    color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.12);
+    border-color: var(--accent);
+}
+
+.nav-icon-btn:hover svg {
+    transform: scale(1.1);
+}
+
+.admin-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-right: 15px;
+    border-right: 1px solid var(--border);
+}
+
+.admin-user-details {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.admin-name {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.admin-role {
+    font-size: 11px;
+    color: var(--text-grey);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.admin-avatar {
+    width: 40px;
+    height: 40px;
+    background: var(--gold-gradient);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 4px 15px rgba(212, 163, 115, 0.2);
+    border: 2px solid var(--white);
+}
+
+.logout-icon-btn {
+    color: var(--text-grey);
+    background: var(--sidebar-bg);
+    border: 1px solid var(--border);
+}
+
+.logout-icon-btn:hover {
+    background: #fff5f5;
+    color: #ff4757;
+    border-color: #ff4757;
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.1);
+}
+
+@media (max-width: 600px) {
+    .admin-user-details {
+        display: none;
+    }
+}

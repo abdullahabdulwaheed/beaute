@@ -1,0 +1,194 @@
+.footer {
+    padding-top: 100px;
+    position: relative;
+    transition: all 0.5s ease;
+    overflow: hidden;
+}
+
+.footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.25;
+    background-image: var(--footer-bg);
+    background-repeat: repeat;
+    background-size: 150px;
+    pointer-events: none;
+}
+
+/* Ensure content stays on top of the pattern */
+.footer-content,
+.footer-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+/* Light Mode Styling (Default) */
+.footer.light {
+    background-color: #fdfaf5;
+    color: #1a1a1a;
+    border-top: 1px solid #faedcd;
+}
+
+
+/* Dark Mode Styling */
+.footer.dark {
+    background-color: #121212;
+    color: #f5f5f5;
+    border-top: 1px solid #333;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 2fr;
+    gap: 50px;
+    padding-bottom: 80px;
+}
+
+.footer-logo {
+    font-size: 32px;
+    letter-spacing: 5px;
+    margin-bottom: 25px;
+    color: #d4a373;
+    /* Gold accent always used for brand */
+}
+
+.brand-info p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: inherit;
+    opacity: 0.8;
+    max-width: 350px;
+}
+
+.footer-section h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    color: #d4a373;
+}
+
+.footer-section ul li {
+    margin-bottom: 15px;
+}
+
+.footer-section ul li a {
+    font-size: 15px;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+}
+
+.footer-section ul li a:hover {
+    opacity: 1;
+    padding-left: 5px;
+    color: #d4a373;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.social-icon {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: inherit;
+    opacity: 0.6;
+    transition: opacity 0.3s ease;
+}
+
+.social-icon:hover {
+    opacity: 1;
+    color: #d4a373;
+}
+
+/* Newsletter section */
+.newsletter-form {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.newsletter-form input {
+    flex: 1;
+    background: transparent;
+    border: 1px solid rgba(212, 163, 115, 0.3);
+    padding: 12px 15px;
+    border-radius: 5px;
+    color: inherit;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+.newsletter-form input:focus {
+    border-color: #d4a373;
+}
+
+.btn-subscribe {
+    background: #d4a373;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.btn-subscribe:hover {
+    background: #1a1a1a;
+}
+
+.footer.dark .btn-subscribe:hover {
+    background: #faedcd;
+    color: #1a1a1a;
+}
+
+/* Bottom Bar */
+.footer-bottom {
+    padding: 30px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer.dark .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bottom-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    opacity: 0.6;
+}
+
+.bottom-links {
+    display: flex;
+    gap: 30px;
+}
+
+@media (max-width: 1024px) {
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px 40px;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .bottom-content {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+}

@@ -1,0 +1,81 @@
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.add-product form {
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.add-img-upload img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+.img-placeholder {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--border);
+    background: var(--admin-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 12px;
+    color: var(--text-light);
+    font-size: 13px;
+    transition: var(--transition);
+}
+
+.img-placeholder:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: #fdfaf5;
+}
+
+.add-category-price {
+    display: flex;
+    gap: 30px;
+}
+
+.add-product input,
+.add-product textarea,
+.add-product select {
+    padding: 14px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--card-bg);
+    color: var(--text-dark);
+    transition: var(--transition);
+}
+
+.add-product input:focus,
+.add-product textarea:focus,
+.add-product select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.05);
+}
+
+.add-btn {
+    max-width: 250px;
+    padding: 12px 30px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    .add-category-price {
+        flex-direction: column;
+    }
+}
